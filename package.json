@@ -1,0 +1,14 @@
+{
+  "name": "thumbnails",
+  "version": "1.0.0",
+  "description": "checking imagemagick ",
+  "main": "thumbnail.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "archit",
+  "license": "MIT ",
+  "dependencies": {
+    "imagemagick": "^0.1.3"
+  }
+}
