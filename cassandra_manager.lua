@@ -1,5 +1,5 @@
 local log = ngx.log
-local ERROR = ngx.ERR
+local err = ngx.ERR
 local status = ngx.status
 local cassandra = require "cassandra"
 local Cluster = require 'resty.cassandra.cluster'
@@ -16,7 +16,7 @@ function _M.do_init()
     timeout_read = 1000,
   }
   if err then
-    log(ERROR, 'could not create connection', err)
+    log(err, 'could not create connection', err)
   end
 
   cluster_instance = cluster
@@ -26,7 +26,7 @@ function _M.do_content(imageId)
   id = cassandra.uuid(imageId)
   local rows, err, cql_code = cluster_instance:execute("SELECT * FROM cordiant_images.image_details WHERE id=?", {id})
   if err then
-   log(ERROR, 'could not execute query', err)
+   log(err, 'could not execute query', err)
   end
   return rows ;
 end
@@ -37,7 +37,7 @@ function _M.do_validate(accesstoken,user_id,org_id)
   local cassandra_id= cassandra.bigint(id)
   local rows, err, cql_code = cluster_instance:execute("SELECT access_tokens FROM ekam.userdetails_"..org_id.." WHERE  userid=?", { cassandra_id})
   if err then 
-    log(ERROR, "error creating connection",err )
+    log(err, "error creating connection",err )
     return success
   else
     local access_tokens = rows[1].access_tokens
